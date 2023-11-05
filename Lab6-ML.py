@@ -126,4 +126,40 @@ y_pred = logistic_regression.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
+# In[75]:
+
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+
+# Create a DataFrame from the given data
+
+# Split the data into training and testing sets
+X = df[['embed_0', 'embed_1']]
+y = df['Label']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train a Decision Tree Regressor
+tree_regressor = DecisionTreeRegressor()
+tree_regressor.fit(X_train, y_train)
+
+# Predict values using the Decision Tree Regressor
+tree_predictions = tree_regressor.predict(X_test)
+
+# Train a k-NN Regressor
+knn_regressor = KNeighborsRegressor(n_neighbors=3)  # You can adjust the number of neighbors (k) as needed.
+knn_regressor.fit(X_train, y_train)
+
+# Predict values using the k-NN Regressor
+knn_predictions = knn_regressor.predict(X_test)
+
+# Evaluate the models
+tree_mse = mean_squared_error(y_test, tree_predictions)
+knn_mse = mean_squared_error(y_test, knn_predictions)
+
+print("Decision Tree MSE:", tree_mse)
+print("k-NN Regressor MSE:", knn_mse)
 
