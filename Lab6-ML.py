@@ -64,5 +64,66 @@ plt.xlabel('embed_0')
 plt.ylabel('embed_1')
 plt.show()
 
+# In[47]:
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Load the data into a DataFrame
+
+
+# Select two classes for binary classification (ClassA and ClassB)
+binary_data = df[df['Label'].isin([0, 1])]
+
+# Define features and target variable
+X = binary_data[['embed_0', 'embed_1']]
+y = (binary_data['Label'] == 0).astype(int)  # 1 for ClassA, 0 for ClassB
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train a logistic regression classifier
+classifier = LogisticRegression()
+classifier.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = classifier.predict(X_test)
+
+# Evaluate the model accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Test set accuracy: {accuracy}")
+
+
+# In[62]:
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+
+
+# Choose two classes for binary classification (ClassA and ClassB)
+binary_df = df[(df['Label'] == 0) | (df['Label'] == 1)]
+
+# Define features and target variable
+X = binary_df[['embed_0', 'embed_1']]
+y = (binary_df['Label'] == 0).astype(int)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train a logistic regression classifier
+logistic_regression = LogisticRegression()
+logistic_regression.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = logistic_regression.predict(X_test)
+
+# Evaluate the model's accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
 
 
